@@ -1,0 +1,85 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class ATMInterface {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> transactionHistory = new ArrayList<>();
+
+        int balance = 1000; // Initial balance
+        boolean exit = false;
+
+        System.out.println("Welcome to the ATM Interface!");
+
+        while (!exit) {
+            System.out.println("\nChoose an option:");
+            System.out.println("1. Check Balance");
+            System.out.println("2. Deposit Money");
+            System.out.println("3. Withdraw Money");
+            System.out.println("4. View Transaction History");
+            System.out.println("5. Exit");
+
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    // Check Balance
+                    System.out.println("Your current balance is: $" + balance);
+                    break;
+
+                case 2:
+                    // Deposit Money
+                    System.out.print("Enter the amount to deposit: $");
+                    int depositAmount = scanner.nextInt();
+                    if (depositAmount > 0) {
+                        balance += depositAmount;
+                        transactionHistory.add("Deposited: $" + depositAmount);
+                        System.out.println("Successfully deposited $" + depositAmount);
+                    } else {
+                        System.out.println("Invalid amount. Please enter a positive number.");
+                    }
+                    break;
+
+                case 3:
+                    // Withdraw Money
+                    System.out.print("Enter the amount to withdraw: $");
+                    int withdrawAmount = scanner.nextInt();
+                    if (withdrawAmount > 0 && withdrawAmount <= balance) {
+                        balance -= withdrawAmount;
+                        transactionHistory.add("Withdrew: $" + withdrawAmount);
+                        System.out.println("Successfully withdrew $" + withdrawAmount);
+                    } else if (withdrawAmount > balance) {
+                        System.out.println("Insufficient balance!");
+                    } else {
+                        System.out.println("Invalid amount. Please enter a positive number.");
+                    }
+                    break;
+
+                case 4:
+                    // View Transaction History
+                    System.out.println("Transaction History:");
+                    if (transactionHistory.isEmpty()) {
+                        System.out.println("No transactions made yet.");
+                    } else {
+                        for (String transaction : transactionHistory) {
+                            System.out.println(transaction);
+                        }
+                    }
+                    break;
+
+                case 5:
+                    // Exit
+                    System.out.println("Thank you for using the ATM Interface. Have a Nice Day!");
+                    exit = true;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Please select a valid option.");
+                    break;
+            }
+        }
+
+        scanner.close();
+    }
+}

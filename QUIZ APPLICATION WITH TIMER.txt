@@ -1,0 +1,75 @@
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class QuizApplicationWithTimer {
+    static int score = 0;
+    static boolean timeUp = false;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Questions and answers
+        String[][] quizData = {
+            {"What is the capital of France?", "Paris"},
+            {"What is 5 + 7?", "12"},
+            {"Which planet is known as the Red Planet?", "Mars"},
+            {"Who wrote 'To Kill a Mockingbird'?", "Harper Lee"},
+            {"What is the square root of 81?", "9"}
+        };
+
+        System.out.println("Welcome to the Quiz Application!");
+        System.out.println("You have 10 seconds to answer each question.\n");
+
+        // Start the quiz
+        for (int i = 0; i < quizData.length; i++) {
+            timeUp = false;
+
+            // Timer configuration for each question
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    timeUp = true;
+                }
+            };
+            timer.schedule(task, 10000); // Set 10 seconds for each question
+
+            // Ask the question
+            System.out.println("Question " + (i + 1) + ": " + quizData[i][0]);
+            System.out.print("Your answer: ");
+
+            String answer = "";
+            long startTime = System.currentTimeMillis();
+
+            // Wait for input within the time limit
+            while (System.currentTimeMillis() - startTime < 10000 && !scanner.hasNextLine()) {
+                // Wait for input or time to run out
+            }
+
+            if (!timeUp && scanner.hasNextLine()) {
+                answer = scanner.nextLine();
+            }
+
+            // Evaluate the answer
+            if (timeUp) {
+                System.out.println("Time's up! Moving to the next question.");
+            } else {
+                if (answer.equalsIgnoreCase(quizData[i][1])) {
+                    System.out.println("Correct!");
+                    score++;
+                } else {
+                    System.out.println("Incorrect! The correct answer was: " + quizData[i][1]);
+                }
+            }
+            System.out.println();
+
+            // Cancel the timer after each question
+            timer.cancel();
+        }
+
+        // End of quiz
+        System.out.println("Quiz Over! Your final score is: " + score + "/" + quizData.length);
+        scanner.close();
+    }
+}

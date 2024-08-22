@@ -1,0 +1,65 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentCourseRegistrationSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Student information
+        System.out.print("Enter Student Name: ");
+        String studentName = scanner.nextLine();
+
+        System.out.print("Enter Student ID: ");
+        String studentID = scanner.nextLine();
+
+        // List to hold registered courses
+        ArrayList<String> registeredCourses = new ArrayList<>();
+
+        int choice;
+
+        do {
+            // Menu
+            System.out.println("\n--- Course Registration System ---");
+            System.out.println("1. Register for a Course");
+            System.out.println("2. View Registered Courses");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    // Register for a course
+                    System.out.print("Enter the Course Name to Register: ");
+                    String courseName = scanner.nextLine();
+                    registeredCourses.add(courseName);
+                    System.out.println("Course " + courseName + " registered successfully!");
+                    break;
+
+                case 2:
+                    // View registered courses
+                    System.out.println("\nRegistered Courses:");
+                    if (registeredCourses.isEmpty()) {
+                        System.out.println("No courses registered yet.");
+                    } else {
+                        for (int i = 0; i < registeredCourses.size(); i++) {
+                            System.out.println((i + 1) + ". " + registeredCourses.get(i));
+                        }
+                    }
+                    break;
+
+                case 3:
+                    // Exit
+                    System.out.println("Exiting the system. Thank you!");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Please choose again.");
+            }
+
+        } while (choice != 3);
+
+        // Close scanner
+        scanner.close();
+    }
+}
